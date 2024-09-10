@@ -1,10 +1,10 @@
 import prisma from "@/prisma/client";
 import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
 import React from "react";
 import delay from "delay";
 import IssueStatusBadge from "../components/IssueStatusBadge";
 import IssueActions from "./IssueActions";
+import Link from "../components/Link";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
@@ -18,11 +18,11 @@ const IssuesPage = async () => {
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="">
+              <Table.ColumnHeaderCell className="hidden md:table-cell">
                 Status
               </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="">
-                Description
+              <Table.ColumnHeaderCell className="hidden md:table-cell">
+                Created At
               </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
@@ -31,16 +31,18 @@ const IssuesPage = async () => {
               return (
                 <Table.Row key={issue.id}>
                   <Table.Cell>
-                    {issue.title}
+                    <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                     <div className="md:hidden">
                       <IssueStatusBadge status={issue.status} />
                     </div>
                   </Table.Cell>
-                  <Table.Cell className="">
+                  <Table.Cell className="hidden md:table-cell">
                     <IssueStatusBadge status={issue.status} />
                   </Table.Cell>
                   {/* hidden md:visible */}
-                  <Table.Cell className="">{issue.description}</Table.Cell>
+                  <Table.Cell className="hidden md:table-cell">
+                    {issue.createdAt.toDateString()}
+                  </Table.Cell>
                 </Table.Row>
               );
             })}

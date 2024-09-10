@@ -18,7 +18,7 @@ const IssueLoadingPage = () => {
                 Status
               </Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell className="">
-                Description
+                Created At
               </Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
